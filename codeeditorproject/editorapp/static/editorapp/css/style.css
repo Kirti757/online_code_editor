@@ -1,0 +1,201 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f8f9fa;
+}
+
+/* Navbar */
+.navbar {
+  background-color:  rgba(30, 41, 59, 0.95);
+  color: white;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.navbar-brand {
+  font-size: 24px;
+  color: white;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+.navbar-toggler {
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+  color: white;
+  display: inline-block;
+}
+
+.nav-toggle {
+  display: none;
+}
+
+.nav-links {
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+  margin-top: 10px;
+} 
+
+.nav-toggle:checked + .navbar-toggler + .nav-links {
+  display: flex;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.nav-link:hover {
+  background-color: #3e444a;
+}  
+
+/* Show nav-links inline on large screens */
+@media (min-width: 768px) {
+  .navbar-toggler {
+    display: none;
+  }
+
+  .nav-links {
+    display: flex !important;
+    flex-direction: row;
+    gap: 20px;
+    width: auto;
+    margin-top: 0;
+  }
+}
+
+/* === Main Container === */
+.whole_container {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px;
+  border: 2px solid #e5e7ea;
+}
+
+/* === Toolbar === */
+.toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 15px;
+  color: black;
+  
+}
+
+#languageSelect {
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  border: 1px solid #ccc;
+}
+
+/* Buttons */
+.btn {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.run {
+  background-color: #28a745;
+  color: white;
+}
+
+.right-buttons {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.clear {
+  background-color: #b3bdc7;
+  color: #333;
+}
+
+.btn:not(.run):not(.clear) {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.92;
+}
+
+/* === Editor & Output Layout === */
+.editor-output-container {
+  display: flex;
+  gap: 10px;
+  height: 500px;
+}
+
+.editor-output-container > * {
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Code Editor */
+#codeeditor {
+  flex: 1;
+  height: 100%;
+   resize:none;
+  font-size: 16px;
+  font-family: monospace;
+  padding: 12px;
+  border: 2px solid #e5e7ea;
+  outline: none;
+  background-color: white;
+  color: #333;
+}
+
+/* Output Area */
+.output-box {
+  flex: 1;
+  background-color: rgba(30, 41, 59, 0.95);
+  color: #ffffff;
+  padding: 12px;
+  overflow-y: auto;
+  font-family: monospace;
+
+}
+
+.output-box h4 {
+  margin-bottom:10px;
+
+}
+
+#outputText {
+  white-space: pre-wrap;
+}
+/* Stack editor and output vertically on smaller screens */
+@media (max-width: 768px) {
+  .editor-output-container {
+    flex-direction: column;
+    height: auto; /* Allow natural height on mobile */
+  }
+
+  #codeeditor,
+  .output-box {
+    height: auto;
+    min-height: 300px;
+  }
+}
+

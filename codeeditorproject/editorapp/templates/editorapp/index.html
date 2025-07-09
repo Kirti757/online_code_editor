@@ -1,0 +1,70 @@
+{% extends 'editorapp/base.html' %}
+
+{% block title %}Online Code Editor{% endblock %}
+
+{% block content %}
+<nav class="navbar">
+  <a href="#" class="navbar-brand">Code Editor</a>
+
+  <!-- Toggle checkbox -->
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+  <label for="nav-toggle" class="navbar-toggler">☰</label>
+
+  <div class="nav-links">
+    <a class="nav-link" href="#">Home</a>
+    <a class="nav-link" href="#">Features</a>
+    <a class="nav-link" href="#">Pricing</a>
+    <a class="nav-link" href="#">Disabled</a>
+  </div>
+</nav>
+
+<!-- ✅ MAIN CONTAINER -->
+<div class="whole_container">
+  <!-- Django Form to Submit Code -->
+  <form method="POST">
+    {% csrf_token %}
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <label for="languageSelect"><strong>Select Language:</strong></label>
+
+      <select id="languageSelect" name="language">
+        <option value="python" {% if language == "python" %}selected{% endif %}>Python</option>
+        <option value="javascript" {% if language == "javascript" %}selected{% endif %}>JavaScript</option>
+        <option value="java" {% if language == "java" %}selected{% endif %}>Java</option>
+        <option value="sql" {% if language == "sql" %}selected{% endif %}>SQL</option>
+      </select>
+      
+      <button type="submit" class="btn run">Run</button>
+
+      <div class="right-buttons">
+        <button type="reset" class="btn">Clear</button>
+        <button type="submit" name="action" value="download" class="btn">Download</button>
+        <button type="button" class="btn">Share</button>
+      </div>
+    </div>
+
+    <!-- Editor + Output -->
+    <!-- Editor + Output -->
+    <div class="editor-output-container">
+      <textarea name="code" id="codeeditor" placeholder="Write your code here...">{{ code|default:"print('Hello, World!')" }}</textarea>
+
+      <div id="output" class="output-box">
+        <h4>Output</h4>
+
+        {% if show_input_box %}
+          <label for="codeinput"><strong>Program Input:</strong></label>
+          <textarea name="code_input" id="codeinput" placeholder="Enter input for your program here...">{{ code_input|default:'' }}</textarea>
+        {% endif %}
+
+        <pre id="outputText">{{ output|default:"Program output will appear here..." }}</pre>
+      </div>
+    </div>
+
+  </form>
+</div>
+{% endblock %}
+
+{% block footer %}
+<footer class="text-center mt-4 text-muted">This is Index footer</footer>
+{% endblock %}

@@ -38,7 +38,7 @@
       <button type="submit" class="btn run">Run</button>
 
       <div class="right-buttons">
-        <button type="reset" class="btn">Clear</button>
+        <button type="submit" name="action" value="clear" class="btn" >Clear</button>
         <button type="submit" name="action" value="download" class="btn">Download</button>
         <button type="button" class="btn">Share</button>
       </div>
@@ -47,7 +47,7 @@
     <!-- Editor + Output -->
     <!-- Editor + Output -->
     <div class="editor-output-container">
-      <textarea name="code" id="codeeditor" placeholder="Write your code here...">{{ code|default:"print('Hello, World!')" }}</textarea>
+      <textarea name="code" id="codeeditor" placeholder="Write your code here...">{{ code|default_if_none:"print('Hello, World!')" }}</textarea>
 
       <div id="output" class="output-box">
         <h4>Output</h4>
@@ -63,8 +63,15 @@
 
   </form>
 </div>
+
+
 {% endblock %}
+
+<script>
+  document.getElementById('')
+</script>
 
 {% block footer %}
 <footer class="text-center mt-4 text-muted">This is Index footer</footer>
 {% endblock %}
+ 

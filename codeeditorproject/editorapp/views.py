@@ -10,8 +10,19 @@ def run_code(request):
     language = 'python'
 
     if request.method == 'POST':
+
+        action=request.POST.get('action')
+
+        if action=='clear':
+            return render(request,'editorapp/index.html',{
+                'code':'',
+                'output':'',
+                'language':'python'
+            })
+        
         code = request.POST.get('code', '')
         language = request.POST.get('language', 'python')
+        
 
         try:
             if language == 'python':
@@ -58,7 +69,9 @@ def run_code(request):
             output = "Error: Code execution timed out."
         except Exception as e:
             output = f"Error: {str(e)}"
-
+        
+        
+    
     return render(request, 'editorapp/index.html', {
         'code': code,
         'output': output,

@@ -3,6 +3,9 @@ import tempfile
 import os
 import sqlite3
 from django.shortcuts import render
+from django.http import HttpResponse
+
+
 
 def run_code(request):
     code = ''
@@ -12,7 +15,7 @@ def run_code(request):
     if request.method == 'POST':
 
         action=request.POST.get('action')
-
+       
         if action=='clear':
             return render(request,'editorapp/index.html',{
                 'code':'',
@@ -20,6 +23,24 @@ def run_code(request):
                 'language':'python'
             })
         
+        if action == 'download':
+            code = request.POST.get('code', '')
+            language = request.POST.get('language', 'txt')
+
+            # Set file extension based on language
+            extension_map = {
+                'python': 'py',
+                'javascript': 'js',
+                'java': 'java',
+                'sql': 'sql',
+            }
+            file_ext = extension_map.get(language, 'txt')
+            filename = f'code.{file_ext}'
+
+            response = HttpResponse(code, content_type='text/plain')
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            return response
+                
         code = request.POST.get('code', '')
         language = request.POST.get('language', 'python')
         

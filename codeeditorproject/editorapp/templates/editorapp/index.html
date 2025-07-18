@@ -1,77 +1,112 @@
 {% extends 'editorapp/base.html' %}
-
-{% block title %}Online Code Editor{% endblock %}
+{% load static %}
 
 {% block content %}
 <nav class="navbar">
   <a href="#" class="navbar-brand">Code Editor</a>
-
-  <!-- Toggle checkbox -->
   <input type="checkbox" id="nav-toggle" class="nav-toggle" />
   <label for="nav-toggle" class="navbar-toggler">☰</label>
-
   <div class="nav-links">
     <a class="nav-link" href="#">Home</a>
-    <a class="nav-link" href="#">Features</a>
-    <a class="nav-link" href="#">Pricing</a>
-    <a class="nav-link" href="#">Disabled</a>
+    <a class="nav-link" href="#">About</a>
+    <a class="nav-link" href="#">Blog</a>
+    <a class="nav-link" href="#">Signin</a>
   </div>
 </nav>
 
-<!-- ✅ MAIN CONTAINER -->
-<div class="whole_container">
-  <!-- Django Form to Submit Code -->
-  <form method="POST">
-    {% csrf_token %}
-
-    <!-- Toolbar -->
-    <div class="toolbar">
-      <label for="languageSelect"><strong>Select Language:</strong></label>
-
-      <select id="languageSelect" name="language">
-        <option value="python" {% if language == "python" %}selected{% endif %}>Python</option>
-        <option value="javascript" {% if language == "javascript" %}selected{% endif %}>JavaScript</option>
-        <option value="java" {% if language == "java" %}selected{% endif %}>Java</option>
-        <option value="sql" {% if language == "sql" %}selected{% endif %}>SQL</option>
-      </select>
-      
-      <button type="submit" class="btn run">Run</button>
-
-      <div class="right-buttons">
-        <button type="submit" name="action" value="clear" class="btn" >Clear</button>
-        <button type="submit" name="action" value="download" class="btn">Download</button>
-        <button type="button" class="btn">Share</button>
-      </div>
-    </div>
-
-    <!-- Editor + Output -->
-    <!-- Editor + Output -->
-    <div class="editor-output-container">
-      <textarea name="code" id="codeeditor" placeholder="Write your code here...">{{ code|default_if_none:"print('Hello, World!')" }}</textarea>
-
-      <div id="output" class="output-box">
-        <h4>Output</h4>
-
-        {% if show_input_box %}
-          <label for="codeinput"><strong>Program Input:</strong></label>
-          <textarea name="code_input" id="codeinput" placeholder="Enter input for your program here...">{{ code_input|default:'' }}</textarea>
-        {% endif %}
-
-        <pre id="outputText">{{ output|default:"Program output will appear here..." }}</pre>
-      </div>
-    </div>
-
-  </form>
+<!-- Language Selector -->
+<div class="language-panel">
+  <img src="{% static 'images/python.jpeg' %}" alt="Python" onclick="setLanguage('python', this)" class="{% if language == 'python' %}active{% endif %}" />
+  <img src="{% static 'images/java.png' %}" alt="Java" onclick="setLanguage('java', this)" class="{% if language == 'java' %}active{% endif %}" />
+  <img src="{% static 'images/js.png' %}" alt="JavaScript" onclick="setLanguage('javascript', this)" class="{% if language == 'javascript' %}active{% endif %}" />
+  <img src="{% static 'images/sql.png' %}" alt="SQL" onclick="setLanguage('sql', this)" class="{% if language == 'sql' %}active{% endif %}" />
 </div>
 
+<form method="POST" action="{% url 'run_code' %}">
+  {% csrf_token %}
+  <input type="hidden" name="language" id="languageInput" value="{{ language|default:'python' }}">
 
-{% endblock %}
+  <div class="maincontainer">
+    <div class="button-bar">
+      <div class="left-buttons">
+        <button class="run" type="submit" name="action" value="run">Run</button>
+        <button id="toggle-dark" class="dark-toggle" type="button">🌙</button>
+      </div>
+      <div class="right-buttons">
+        <button class="editor-btn" type="submit" name="action" value="clear">Input</button>
+        <button class="editor-btn" type="button" disabled>Output</button>
+      </div>
+    </div>
+
+    <div class="code-area">
+      <div class="line-numbers" id="lineNumbers">1</div>
+      <textarea id="codeInput" name="code" oninput="updateLineNumbers()" onscroll="syncScroll()" spellcheck="false">{{ code|default:"# Write your code here" }}</textarea>
+    </div>
+
+    <div class="resizer"></div>
+
+    <div class="output-area">
+      <div>Output:</div>
+      <pre>{{ output }}</pre>
+    </div>
+  </div>
+</form>
 
 <script>
-  document.getElementById('')
-</script>
+  function setLanguage(language, icon) {
+    document.getElementById('languageInput').value = language.toLowerCase();
+    document.querySelectorAll('.language-panel img').forEach(img => img.classList.remove('active'));
+    icon.classList.add('active');
+  }
 
-{% block footer %}
-<footer class="text-center mt-4 text-muted">This is Index footer</footer>
+  function updateLineNumbers() {
+    const textarea = document.getElementById('codeInput');
+    const lineNumbers = document.getElementById('lineNumbers');
+    const lines = textarea.value.split('\n').length;
+    lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('<br>');
+  }
+
+  function syncScroll() {
+    const textarea = document.getElementById('codeInput');
+    const lineNumbers = document.getElementById('lineNumbers');
+    lineNumbers.scrollTop = textarea.scrollTop;
+  }
+
+  const resizer = document.querySelector('.resizer');
+  const leftSide = document.querySelector('.code-area');
+  const container = document.querySelector('.maincontainer');
+  let isDragging = false;
+
+  resizer.addEventListener('mousedown', function () {
+    isDragging = true;
+    document.body.style.cursor = 'col-resize';
+  });
+
+  document.addEventListener('mousemove', function (e) {
+    if (!isDragging) return;
+    const containerRect = container.getBoundingClientRect();
+    const minCodeWidth = 200;
+    const minOutputWidth = 300;
+    const resizerWidth = 6;
+    let newLeftWidth = e.clientX - containerRect.left;
+    const maxCodeWidth = containerRect.width - minOutputWidth - resizerWidth;
+
+    newLeftWidth = Math.min(Math.max(newLeftWidth, minCodeWidth), maxCodeWidth);
+    leftSide.style.flex = 'none';
+    leftSide.style.width = `${newLeftWidth}px`;
+  });
+
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+    document.body.style.cursor = 'default';
+  });
+
+  const toggleBtn = document.getElementById('toggle-dark');
+  toggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    toggleBtn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+  });
+
+  window.onload = updateLineNumbers;
+</script>
 {% endblock %}
- 

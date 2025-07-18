@@ -6,16 +6,15 @@
 
 
 
-
 body {
-  background-color: #f8f9fa;
+  background-color:white;
 }
 
 /* Navbar */
 .navbar {
-  background-color:  rgba(30, 41, 59, 0.95);
-  color: white;
-  padding: 10px 15px;
+  background-color:#E7E9EB;
+  color: black;
+  padding: 20px ;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -24,7 +23,7 @@ body {
 
 .navbar-brand {
   font-size: 24px;
-  color: white;
+  color:black;
   text-decoration: none;
   margin-right: auto;
 }
@@ -33,7 +32,7 @@ body {
   font-size: 24px;
   cursor: pointer;
   padding: 8px;
-  color: white;
+  color: black;
   display: inline-block;
 }
 
@@ -54,7 +53,7 @@ body {
 }
 
 .nav-link {
-  color: white;
+  color: black;
   text-decoration: none;
   padding: 8px;
   border-radius: 4px;
@@ -79,126 +78,240 @@ body {
   }
 }
 
-/* === Main Container === */
-.whole_container {
-  background-color: #f8f9fa;
-  padding: 20px;
-  border-radius: 8px;
-  margin: 20px;
-  border: 2px solid #e5e7ea;
+.maincontainer {
+  display: flex;
+  height: 650px;
+  margin-top: 30px;
+  border:2px solid rgb(126, 122, 122);
+  background-color:white;
+  position: relative;
+
 }
 
-/* === Toolbar === */
-.toolbar {
+.code-area,
+.output-area {
+  height: calc(100% - 70px);
+  margin-top: 70px;
+  overflow: auto;
+
+}
+
+.code-area {
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-bottom: 15px;
+  font-family: monospace;
+  flex-grow: 1;
+  min-width: 340px;
+  margin-left: 70px;
+  overflow: hidden;
+  border-left:2px solid rgb(139, 139, 139);
+}
+.line-numbers {
+  width: 40px;
+  padding: 7px 4px;
+  text-align: right;
+  background-color: #f4f4f4;
+  color: #888;
+  user-select: none;
+  border-right: 1px solid #ccc;
+  overflow: hidden;
+  font-size: 15px;
+  line-height: 1.5;
+ 
+}
+
+
+.output-area {
+  flex-grow: 1;
+  padding: 20px;
   color: black;
+  background-color:#E7E9EB;
+  font-size: 17px;
+  overflow: auto;
+
+}
+.resizer {
+  width: 5px;
+  background-color:#92979c;
+  cursor: col-resize;
+}
+/* Optional: remove textarea border and style */
+.code-area textarea {
+  width: 100%;
+  padding-left: 10px;
+  border: none;
+  outline: none;
+  font-size: 17px;
+  resize: none;
+  font-family: monospace;
+  background-color: white;
+  color: rgb(20, 153, 22);
+  line-height: 1.5;
+  overflow: auto;
+}
+
+.button-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+  padding: 0 20px;
+  border-bottom: 2px solid #999;
+  position: absolute;
+  top: 0;
+  left: 70px;
+  right: 0;
+  z-index: 10;
+}
+
+
+.run{
+   
+  border-radius: 6px;
+  padding: 9px 20px;
+  height: 40px;
+  background-color: rgb(20, 153, 22);
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-right: 10px;
+  
+
   
 }
 
-#languageSelect {
-  padding: 6px 10px;
-  border-radius: 4px;
-  font-size: 14px;
-  outline: none;
-  border: 1px solid #ccc;
-}
-
-/* Buttons */
-.btn {
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: bold;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.run {
-  background-color: #28a745;
-  color: white;
-}
-
-.right-buttons {
-  margin-left: auto;
-  display: flex;
-  gap: 10px;
-}
-
-.clear {
-  background-color: #b3bdc7;
-  color: #333;
-}
-
-.btn:not(.run):not(.clear) {
-  background-color: #007bff;
-  color: white;
-}
-
-.btn:hover {
-  opacity: 0.92;
-}
-
-/* === Editor & Output Layout === */
-.editor-output-container {
-  display: flex;
-  gap: 10px;
-  height: 500px;
-}
-
-.editor-output-container > * {
+.share{
   border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Code Editor */
-#codeeditor {
-  flex: 1;
-  height: 100%;
-   resize:none;
-  font-size: 16px;
-  font-family: monospace;
-  padding: 12px;
-  border: 2px solid #e5e7ea;
-  outline: none;
-  background-color: white;
-  color: #333;
-}
-
-/* Output Area */
-.output-box {
-  flex: 1;
-  background-color: rgba(30, 41, 59, 0.95);
-  color: #ffffff;
-  padding: 12px;
-  overflow-y: auto;
-  font-family: monospace;
+  padding: 9px 20px;
+  height: 40px;
+  background-color:rgb(53, 52, 52);
+  cursor: pointer;
+  color:white;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-right: 10px;
 
 }
+.editor-btn{
+  border: 2px solid rgb(250, 247, 247);
+  border-radius: 6px;
+  padding: 9px 20px;
+  background-color:  rgb(53, 52, 52);
+  height: 40px;
+  margin-top:5px;
+  color:white;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 6px;
+  
+  
+}
+.dark-toggle{
+  border-radius: 6px;
+  padding: 5px 15px;
+  background-color:rgb(53, 52, 52);
+  color:white;
+  cursor: pointer;
+  font-weight: bold;
+  height: 40px;
+  margin-top:5px;
+  
+  
+  
+}
 
-.output-box h4 {
-  margin-bottom:10px;
+.left-buttons .right-buttons{
+  display: flex;
+  gap: 9px;
+}
+
+/* #darkmode */
+body.dark-mode {
+  background-color:rgb(9, 9, 9);
+  color: white;
+}
+body.dark-mode .navbar-toggler{
+  color:white;
+}
+body.dark-mode .maincontainer{
+  background-color: #242424;
+}
+
+body.dark-mode .output-area {
+  background-color:#121212;
+  
+}
+body.dark-mode .code-area{
+  border-left:2px solid #242424;;
 
 }
 
-#outputText {
-  white-space: pre-wrap;
-}
-/* Stack editor and output vertically on smaller screens */
-@media (max-width: 768px) {
-  .editor-output-container {
-    flex-direction: column;
-    height: auto; /* Allow natural height on mobile */
-  }
-
-  #codeeditor,
-  .output-box {
-    height: auto;
-    min-height: 300px;
-  }
+body.dark-mode .code-area textarea {
+  background-color: #121212;
+  color: rgb(20, 153, 22);
 }
 
+body.dark-mode .line-numbers {
+  background-color: #1e1e1e;
+  color: #777;
+  border-right: 1px solid #444;
+}
+
+body.dark-mode textarea::placeholder {
+  color: #ccc;
+}
+
+body.dark-mode .navbar {
+  background-color:#121212;
+}
+
+body.dark-mode .editor-btn,
+body.dark-mode .run,
+body.dark-mode .share, body.dark-mode .dark-toggle {
+  background-color: rgb(20, 20, 20);
+  color: white;
+  border:2px solid #494848;
+}
+body.dark-mode .button-bar{
+  background-color: #242424;
+  color: white;
+  border:2px solid #242424;
+
+}
+body.dark-mode .resizer{
+  background-color:#242424;
+}
+body.dark-mode,
+body.dark-mode h1, h2, h3, h4, h5, h6,
+body.dark-mode p,
+body.dark-mode a,
+body.dark-mode span,
+body.dark-mode div,
+body.dark-mode .nav-link,
+body.dark-mode .navbar-brand {
+  color: white !important;
+}
+
+  .language-panel {
+      position: absolute;
+      top: 191px;
+      left: 10px;
+      display: flex;
+      flex-direction: column;
+      z-index: 10;
+      gap:50px;
+    }
+
+    .language-panel img {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      border: 2px solid  #918c8c ;
+      border-radius: 6px;
+      margin-left: 10px;
+
+    }
+    .language-panel img:hover {
+      border-color:black;
+    }
+
+   

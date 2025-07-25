@@ -40,7 +40,7 @@
 
     <div class="code-area">
       <div class="line-numbers" id="lineNumbers">1</div>
-      <textarea id="codeInput" name="code" oninput="updateLineNumbers()" onscroll="syncScroll()" spellcheck="false">{{ code|default:"# Write your code here" }}</textarea>
+      <textarea id="codeInput" name="code">{{ code|default:"# Write your code here" }}</textarea>
     </div>
 
     <div class="resizer"></div>
@@ -108,5 +108,30 @@
   });
 
   window.onload = updateLineNumbers;
+  
+    const languageModes = {
+    python: "python",
+    java: "text/x-java",
+    javascript: "javascript",
+    sql: "text/x-sql"
+  };
+
+  let currentLanguage = document.getElementById("languageInput").value || "python";
+
+
+  // Update hidden input before submit
+  document.querySelector("form").addEventListener("submit", function () {
+    document.getElementById("codeInput").value = editor.getValue();
+  });
+
+  // Modify setLanguage to also update CodeMirror
+  window.setLanguage = function(language, icon) {
+    document.getElementById('languageInput').value = language;
+    document.querySelectorAll('.language-panel img').forEach(img => img.classList.remove('active'));
+    icon.classList.add('active');
+    editor.setOption("mode", languageModes[language]);
+  };
+
+
 </script>
 {% endblock %}

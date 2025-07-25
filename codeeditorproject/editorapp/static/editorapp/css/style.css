@@ -135,7 +135,7 @@ body {
   cursor: col-resize;
 }
 /* Optional: remove textarea border and style */
-.code-area textarea {
+#code-area textarea {
   width: 100%;
   padding-left: 10px;
   border: none;
@@ -148,6 +148,21 @@ body {
   line-height: 1.5;
   overflow: auto;
 }
+#codeInput {
+  width: 100%;
+  height: 100%;
+  padding-left: 10px;
+  border: none;
+  outline: none;
+  font-size: 17px;
+  resize: none;
+  font-family: monospace;
+  background-color: white;
+  color: rgb(20, 153, 22);
+  line-height: 1.5;
+  overflow: auto;
+}
+
 
 .button-bar {
   display: flex;
@@ -302,16 +317,15 @@ body.dark-mode .navbar-brand {
     }
 
     .language-panel img {
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
       cursor: pointer;
       border: 2px solid  #918c8c ;
       border-radius: 6px;
-      margin-left: 10px;
+      margin-left: 4px;
 
     }
     .language-panel img:hover {
       border-color:black;
     }
-
-   
+    
